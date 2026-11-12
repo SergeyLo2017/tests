@@ -1,0 +1,242 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Тести з інформатики</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Rubik:wght@500;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+/* Layout: one centered column, test card on squared paper; teacher panel is a wider table view. */
+:root{
+  --bg:#f4f5f0; --surface:#ffffff; --ink:#1b2321; --muted:#5f6a66; --line:#d9ded6;
+  --accent:#1f6f5c; --on-accent:#ffffff; --soft:#e4efe9;
+  --good:#17784a; --good-bg:#e0f3e8; --bad:#b3261e; --bad-bg:#fbe6e3; --warn:#9a5b00; --warn-bg:#fff0d6;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-disp:"Rubik","Golos Text",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#1a2220; --ink:#e7eee9; --muted:#9aa7a1; --line:#2c3633;
+  --accent:#55c7ad; --on-accent:#0c1210; --soft:#1d2f29;
+  --good:#5fd596; --good-bg:#16301f; --bad:#ff8a80; --bad-bg:#3a1b19; --warn:#f2b75c; --warn-bg:#3a2d12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#1a2220; --ink:#e7eee9; --muted:#9aa7a1; --line:#2c3633;
+  --accent:#55c7ad; --on-accent:#0c1210; --soft:#1d2f29;
+  --good:#5fd596; --good-bg:#16301f; --bad:#ff8a80; --bad-bg:#3a1b19; --warn:#f2b75c; --warn-bg:#3a2d12; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
+ background-image:linear-gradient(color-mix(in srgb,var(--line) 50%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--line) 50%,transparent) 1px,transparent 1px);background-size:28px 28px;
+ padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:720px;margin:0 auto}
+.wrap.wide{max-width:1040px}
+h1,h2{font-family:var(--f-disp);letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:1.6rem;line-height:1.2}
+h2{font-size:1.2rem}
+.card{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;padding:22px;margin-bottom:16px}
+.eyebrow{font-family:var(--f-disp);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:6px}
+.muted{color:var(--muted)}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input[type=text],select{width:100%;max-width:100%;padding:11px 12px;border:1.5px solid var(--ink);border-radius:3px;background:var(--surface);color:var(--ink);font:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{border:1.5px solid var(--ink);background:var(--surface);border-radius:3px;padding:10px 16px;font-weight:600}
+.btn.pri{background:var(--accent);color:var(--on-accent);box-shadow:3px 3px 0 var(--ink)}
+.btn.pri:active{box-shadow:none;transform:translate(3px,3px)}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.bar{height:8px;background:var(--line);border-radius:0;margin:10px 0 18px}
+.bar i{display:block;height:100%;background:var(--accent);width:0}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:12px 14px;border:1.5px solid var(--line);border-radius:3px;background:var(--surface);margin-bottom:10px}
+.opt:hover{border-color:var(--accent)}
+.opt[aria-pressed=true]{border-color:var(--accent);background:var(--soft)}
+.opt b{min-width:1.4em;color:var(--accent)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row .sp{flex:1}
+.grade{font-family:var(--f-disp);font-size:4.2rem;font-weight:700;line-height:1;color:var(--accent)}
+.stats{display:flex;gap:26px;flex-wrap:wrap;margin:14px 0}
+.stats b{display:block;font-family:var(--f-disp);font-size:1.5rem}
+.pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.85rem;font-weight:600}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.note{padding:12px 14px;border:1.5px dashed var(--ink);margin:14px 0;font-size:.94rem}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.94rem}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;white-space:nowrap}
+th{background:var(--soft);font-family:var(--f-disp);font-weight:600}
+td.n{font-variant-numeric:tabular-nums;text-align:right}
+.qrs{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.qrs .card{margin:0;padding:14px;text-align:center}
+.qrs svg,.qrs img{max-width:100%;height:auto;display:block;margin:8px auto}
+textarea{width:100%;min-height:110px;padding:10px;border:1.5px solid var(--ink);border-radius:3px;background:var(--surface);color:var(--ink);font:13px ui-monospace,Menlo,Consolas,monospace}
+.code{word-break:break-all;font:12px ui-monospace,Menlo,Consolas,monospace;background:var(--soft);padding:10px;border:1px solid var(--line);max-height:120px;overflow:auto}
+.rev{padding:12px;border-left:4px solid var(--line);margin-bottom:10px}
+.rev.ok{border-color:var(--good);background:var(--good-bg)}
+.rev.no{border-color:var(--bad);background:var(--bad-bg)}
+@media(max-width:560px){.card{padding:16px}.grade{font-size:3.4rem}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head><body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ===== ТЕСТИ (додаються сюди; ключ = номер у посиланні #<ключ>) ===== */
+const TESTS={
+"t7-1":{grade:"7",classes:["7-А","7-Б","7-В","7-Г"],title:"Цифрові інструменти й штучний інтелект",sub:"Інформатика · 7 клас · Розділ I",
+q:[
+{q:"Що таке хмарний сервіс?",o:["Програма, яка працює на далеких комп'ютерах (серверах), а відкривається через браузер","Програма, яка встановлена лише на твоєму ноутбуці","Прогноз погоди в телефоні","Дротовий інтернет удома"],a:0},
+{q:"Що з переліченого НЕ є цифровим інструментом для навчання?",o:["Онлайн-словник","Google Classroom","Звичайний зошит у клітинку","Google Docs"],a:2},
+{q:"Ти поділився документом із групою й обрав рівень доступу «Перегляд». Що зможуть зробити однокласники?",o:["Змінювати текст","Тільки читати документ","Видалити документ","Нічого, навіть відкрити"],a:1},
+{q:"Який пароль найнадійніший?",o:["12345678","qwerty","Мій_Кіт-Мурко#2026!","ім'я і дата народження"],a:2},
+{q:"Тобі прийшло повідомлення: «Ти виграв телефон! Введи пароль від акаунта за цим посиланням». Що робити?",o:["Ввести пароль, бо шкода втратити приз","Не вводити нічого, не переходити за посиланням і показати повідомлення дорослим","Переслати друзям, щоб теж виграли","Відповісти й надіслати свою адресу"],a:1},
+{q:"Штучний інтелект (ШІ) — це...",o:["Людина, яка швидко друкує","Комп'ютерна система, що вміє виконувати завдання, схожі на «розумну» поведінку людини","Тільки текстовий редактор","Вірус"],a:1},
+{q:"Як навчається система машинного навчання?",o:["Їй уручну пишуть відповідь на кожне можливе запитання","Вона аналізує багато прикладів і сама шукає в них закономірності","Вона вчиться лише в школі","Вона взагалі не навчається"],a:1},
+{q:"Чат-бот упевнено назвав дату події, яка тобі здалася дивною. Як правильно вчинити?",o:["Повірити, бо ШІ не помиляється","Перевірити за підручником або надійним сайтом","Нічого не робити й записати як є","Образитися на чат-бот"],a:1},
+{q:"Який запит до ШІ (промпт) найкращий для гарної відповіді?",o:["«Розкажи про воду»","«Дай відповідь»","«Поясни учню 7 класу, як відбувається колообіг води, у 5 реченнях, з прикладом дощу»","«Вода»"],a:2},
+{q:"Що з цього є чесним (академічна доброчесність) під час навчання з ШІ?",o:["Видати текст ШІ за свою роботу","Попросити ШІ пояснити тему, а потім переказати своїми словами й сказати, що користувався ним","Попросити ШІ зробити за тебе всю роботу й здати без змін","Скопіювати відповідь у зошит і не читати"],a:1},
+{q:"Яку інформацію НЕ можна писати в чат-боті?",o:["Питання про рецепт борщу","Свою домашню адресу, телефон і паролі","Тему доповіді з біології","Просте запитання з математики"],a:1},
+{q:"Який із прикладів — це повсякденне використання ШІ?",o:["Рекомендації відео в застосунку, які підбираються під твої інтереси","Звичайна лампочка на стелі","Паперовий підручник","Лінійка"],a:0}
+]}
+};
+
+/* ===== утиліти ===== */
+const $=(s,r)=> (r||document).querySelector(s);
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function el(html){const d=document.createElement('div');d.innerHTML=html.trim();return d.firstChild}
+function enc(o){return btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
+function dec(s){return JSON.parse(decodeURIComponent(escape(atob(s.trim()))))}
+const fmtTime=s=>Math.floor(s/60)+' хв '+String(s%60).padStart(2,'0')+' с';
+let CL={db:null,user:null,dl:null,isOwner:false};
+
+async function boot(){
+  window.addEventListener('hashchange',route);
+  route(); // сторінка працює без можливостей
+  route(true);
+}
+function route(soft){
+  const h=(location.hash||'').replace('#','');
+  if(soft&&state.running)return;
+  if(h==='teacher')return teacherView();
+  if(TESTS[h])return startView(h);
+  homeView();
+}
+
+/* ===== головна (без посилань на тести для учнів) ===== */
+function homeView(){
+  app.innerHTML=`<div class="card"><div class="eyebrow">Інформатика</div><h1>Тести</h1>
+  <p class="muted">Відкрий тест через QR-код, який показав учитель.</p>
+  </div>`;
+}
+
+/* ===== ТЕСТ ===== */
+const state={running:false};
+function startView(id){
+  const T=TESTS[id];state.running=false;
+  app.innerHTML=`<div class="card"><div class="eyebrow">${esc(T.sub)}</div><h1>${esc(T.title)}</h1>
+  <p class="muted">12 запитань, одна правильна відповідь у кожному. Повернутися до попереднього запитання не можна.</p>
+  <div class="note"><b>Важливо.</b> Не виходь зі сторінки й не перемикай вкладки під час тесту. Кожен вихід фіксується й показується вчителю.</div>
+  <label for="nm">Прізвище та ім'я</label><input type="text" id="nm" autocomplete="off" placeholder="Наприклад: Коваленко Олена">
+  <label for="cl">Клас</label><select id="cl"><option value="">Обери клас</option>${T.classes.map(c=>`<option>${c}</option>`).join('')}</select>
+  <div class="row" style="margin-top:20px"><button class="btn pri" id="go" disabled>Почати тест</button></div></div>`;
+  const chk=()=>{$('#go').disabled=!($('#nm').value.trim().length>=3&&$('#cl').value)};
+  $('#nm').oninput=chk;$('#cl').onchange=chk;
+  $('#go').onclick=()=>runTest(id,$('#nm').value.trim(),$('#cl').value);
+}
+function runTest(id,name,cls){
+  const T=TESTS[id];
+  const Q=shuffle(T.q).map(q=>{const opts=shuffle(q.o.map((t,i)=>({t,ok:i===q.a})));return{q:q.q,opts}});
+  const S={id,name,cls,Q,i:0,ans:[],exits:0,awayMs:0,leftAt:0,t0:Date.now(),sel:-1};
+  state.running=true;state.S=S;
+  const leave=()=>{if(!S.leftAt&&!S.done){S.leftAt=Date.now();S.exits++}};
+  const back=()=>{if(S.leftAt){S.awayMs+=Date.now()-S.leftAt;S.leftAt=0;badge()}};
+  const vis=()=>document.hidden?leave():back();
+  document.addEventListener('visibilitychange',vis);
+  window.addEventListener('blur',leave);window.addEventListener('focus',back);
+  S.cleanup=()=>{document.removeEventListener('visibilitychange',vis);window.removeEventListener('blur',leave);window.removeEventListener('focus',back)};
+  function badge(){const b=$('#ex');if(b){b.textContent='Виходів зі сторінки: '+S.exits;b.className='pill '+(S.exits?'bad':'good')}}
+  function show(){
+    const q=S.Q[S.i];S.sel=-1;
+    app.innerHTML=`<div class="card"><div class="row"><div class="eyebrow sp">Запитання ${S.i+1} з 12</div><span id="ex" class="pill good">Виходів зі сторінки: ${S.exits}</span></div>
+    <div class="bar"><i style="width:${S.i/12*100}%"></i></div>
+    <h2>${esc(q.q)}</h2><div style="margin-top:16px" id="opts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="false"><b>${'АБВГ'[k]}</b><span>${esc(o.t)}</span></button>`).join('')}</div>
+    <div class="row" style="margin-top:8px"><span class="sp"></span><button class="btn pri" id="nx" disabled>${S.i===11?'Завершити':'Далі'}</button></div></div>`;
+    document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{S.sel=+b.dataset.k;document.querySelectorAll('.opt').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#nx').disabled=false});
+    $('#nx').onclick=()=>{const o=q.opts[S.sel];S.ans.push({q:q.q,pick:o.t,ok:o.ok,right:q.opts.find(x=>x.ok).t});if(S.i===11)finish();else{S.i++;show()}};
+  }
+  show();
+}
+async function finish(){
+  const S=state.S;S.done=true;S.cleanup();state.running=false;
+  if(S.leftAt){S.awayMs+=Date.now()-S.leftAt;S.leftAt=0}
+  const T=TESTS[S.id];const correct=S.ans.filter(a=>a.ok).length;const secs=Math.round((Date.now()-S.t0)/1000);
+  const rec={test:S.id,name:S.name,cls:S.cls,grade:correct,correct,total:12,exits:S.exits,awaySec:Math.round(S.awayMs/1000),secs,at:Date.now(),
+    answers:S.ans.map(a=>({q:a.q,pick:a.pick,ok:a.ok}))};
+  const code=enc({t:rec.test,n:rec.name,c:rec.cls,g:rec.grade,e:rec.exits,w:rec.awaySec,s:rec.secs,at:rec.at,a:S.ans.map(a=>a.ok?1:0),p:S.ans.map(a=>a.pick)});
+  const warn=S.exits?`<span class="pill bad">Виходів зі сторінки: ${S.exits}</span>`:`<span class="pill good">Виходів зі сторінки: 0</span>`;
+  app.innerHTML=`<div class="card"><div class="eyebrow">${esc(T.title)}</div><h1>${esc(S.name)}, ${esc(S.cls)}</h1>
+   <div style="margin:18px 0 6px" class="muted">Твоя оцінка (12-бальна шкала)</div><div class="grade">${correct}</div>
+   <div class="stats"><div><b>${correct} з 12</b><span class="muted">правильних</span></div><div><b>${fmtTime(secs)}</b><span class="muted">час</span></div><div><b>${S.exits}</b><span class="muted">виходів зі сторінки</span></div></div>
+   <div id="send" class="note">Надсилаю результат учителю…</div></div>
+   <div class="card"><h2>Розбір відповідей</h2><div style="margin-top:12px">${S.ans.map((a,i)=>`<div class="rev ${a.ok?'ok':'no'}"><b>${i+1}. ${esc(a.q)}</b><br>Твоя відповідь: ${esc(a.pick)}${a.ok?' ✓':`<br>Правильно: ${esc(a.right)}`}</div>`).join('')}</div></div>`;
+  let sent=false;
+  if(CL.db){try{await CL.db.collection('results').doc(S.id+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)).set(rec);sent=true}catch(e){sent=false}}
+  const box=$('#send');
+  if(sent){box.className='note';box.innerHTML='<span class="pill good">Результат надіслано вчителю</span> Можеш закривати сторінку.'}
+  else{box.innerHTML=`<b>Надішли результат учителю.</b><br>Натисни «Копіювати результат» і надішли текст учителю в чат (Viber/Telegram).<div class="code" style="margin:10px 0">${esc(code)}</div><button class="btn pri" id="cp">Копіювати результат</button> <span id="cpm" class="muted"></span>`;
+    $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(code);$('#cpm').textContent='Скопійовано'}catch(e){const r=document.createRange();r.selectNodeContents($('.code'));const s=getSelection();s.removeAllRanges();s.addRange(r);$('#cpm').textContent='Виділено, скопіюй вручну'}}}
+}
+
+/* ===== ПАНЕЛЬ ВЧИТЕЛЯ ===== */
+let unsub=null,pinOk=false;
+const hsh=s=>{let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return String(h)};
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+function pinGate(){
+  const has=ls('pinh');
+  app.innerHTML=`<div class="card"><div class="eyebrow">Лоюк С. Ю.</div><h1>Панель вчителя</h1>
+  <p class="muted">${has?'Введи свій PIN-код.':'Придумай PIN-код (щонайменше 4 цифри). Він збережеться лише в цьому браузері.'}</p>
+  <label for="pin">PIN</label><input type="text" id="pin" inputmode="numeric" autocomplete="off" style="max-width:220px">
+  <div class="row" style="margin-top:16px"><button class="btn pri" id="pg">${has?'Увійти':'Зберегти й увійти'}</button><span id="pe" class="pill bad" hidden>Невірний PIN</span></div></div>`;
+  $('#pg').onclick=()=>{const v=$('#pin').value.trim();if(v.length<4)return;if(!has){ls('pinh',hsh(v));pinOk=true;teacherView()}else if(hsh(v)===has){pinOk=true;teacherView()}else $('#pe').hidden=false};
+}
+function teacherView(){
+  state.running=false;
+  if(!pinOk){return pinGate()}
+  document.getElementById('app').className='wrap wide';
+  const base=location.href.split('#')[0];
+  app.innerHTML=`<div class="card"><div class="eyebrow">Лоюк С. Ю.</div><h1>Панель вчителя</h1>
+  <p class="muted">QR-коди тестів, результати класів, виходи зі сторінки й оцінки.</p><p><button class="btn" id="clr">Очистити таблицю</button></p></div>
+  <div class="card"><h2>QR-коди тестів</h2><div class="qrs" id="qrs" style="margin-top:12px"></div></div>
+  <div class="card"><div class="row"><h2 class="sp">Результати</h2>
+   <select id="ft" style="width:auto;max-width:100%"><option value="">Усі тести</option>${Object.entries(TESTS).map(([k,t])=>`<option value="${k}">${esc(t.title)} (${t.grade} кл.)</option>`).join('')}</select>
+   <select id="fc" style="width:auto;max-width:100%"><option value="">Усі класи</option></select>
+   <button class="btn" id="csv">Завантажити CSV</button></div>
+   <div class="tw" style="margin-top:12px"><table><thead><tr><th>Учень</th><th>Клас</th><th>Тест</th><th>Оцінка</th><th>Виходів</th><th>Поза сторінкою</th><th>Час</th><th>Коли</th></tr></thead><tbody id="rows"><tr><td colspan="8" class="muted">Завантаження…</td></tr></tbody></table></div></div>
+  <div class="card"><h2>Додати результати з чату</h2><p class="muted">Учні надсилають вам код результату. Встав коди сюди, кожен з нового рядка. Таблиця зберігається в цьому браузері.</p>
+   <textarea id="paste" placeholder="Встав коди сюди"></textarea><div class="row" style="margin-top:10px"><button class="btn pri" id="addp">Додати до таблиці</button><span id="pm" class="muted"></span></div></div>`;
+  $('#clr').onclick=()=>{if(!$('#clr').dataset.s){$('#clr').dataset.s=1;$('#clr').textContent='Натисни ще раз, щоб очистити';return}manual=[];ls('manual','[]');draw()};
+  const qrs=$('#qrs');
+  for(const [k,t] of Object.entries(TESTS)){
+    const url=base+'#'+k;let svg='';
+    try{const q=qrcode(0,'M');q.addData(url);q.make();svg=q.createSvgTag({cellSize:5,margin:2,scalable:true})}catch(e){svg='<p class="muted">QR недоступний</p>'}
+    qrs.append(el(`<div class="card"><b>${esc(t.title)}</b><div class="muted">${t.grade} клас</div>${svg}<div class="muted" style="font-size:.8rem;word-break:break-all">${esc(url)}</div></div>`));
+  }
+  const fc=$('#fc');[...new Set(Object.values(TESTS).flatMap(t=>t.classes))].forEach(c=>fc.append(new Option(c,c)));
+  let rows=[];let manual=[];try{manual=JSON.parse(ls('manual')||'[]')}catch(e){}
+  const draw=()=>{
+    const ft=$('#ft').value,cc=$('#fc').value;
+    let L=rows.concat(manual).filter(r=>(!ft||r.test===ft)&&(!cc||r.cls===cc)).sort((a,b)=>(a.cls||'').localeCompare(b.cls||'')||(a.name||'').localeCompare(b.name||'','uk'));
+    $('#rows').innerHTML=L.length?L.map(r=>`<tr><td>${esc(r.name)}</td><td>${esc(r.cls)}</td><td>${esc((TESTS[r.test]||{}).title||r.test)}</td><td class="n"><b>${r.grade}</b> / 12</td><td class="n"><span class="pill ${r.exits?'bad':'good'}">${r.exits}</span></td><td class="n">${r.awaySec} с</td><td class="n">${fmtTime(r.secs)}</td><td>${new Date(r.at).toLocaleString('uk-UA',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join(''):'<tr><td colspan="8" class="muted">Поки що немає результатів</td></tr>';
+    draw.L=L;
+  };
+  $('#ft').onchange=draw;$('#fc').onchange=draw;
+  $('#addp').onclick=()=>{let ok=0,bad=0;$('#paste').value.split(/\n+/).filter(x=>x.trim()).forEach(s=>{try{const d=dec(s);manual.push({test:d.t,name:d.n,cls:d.c,grade:d.g,exits:d.e,awaySec:d.w,secs:d.s,at:d.at});ok++}catch(e){bad++}});$('#pm').textContent=`Додано: ${ok}${bad?`, не розпізнано: ${bad}`:''}`;ls('manual',JSON.stringify(manual));$('#paste').value='';draw()};
+  $('#csv').onclick=async()=>{
+    const head=['Учень','Клас','Тест','Оцінка','Виходів','Поза сторінкою, с','Час, с','Коли'];
+    const body=(draw.L||[]).map(r=>[r.name,r.cls,(TESTS[r.test]||{}).title||r.test,r.grade,r.exits,r.awaySec,r.secs,new Date(r.at).toLocaleString('uk-UA')]);
+    const csv='﻿'+[head,...body].map(a=>a.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n');
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='results.csv';document.body.append(a);a.click();a.remove();
+  };
+  draw();
+}
+boot();
+</script>
+</body></html>
