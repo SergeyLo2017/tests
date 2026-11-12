@@ -1,6 +1,6 @@
 <!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Тести з інформатики</title>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Rubik:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Rubik:wght@600;700&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
 /* Layout: one centered column, test card on squared paper; teacher panel is a wider table view. */
@@ -11,14 +11,6 @@
   --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   --f-disp:"Rubik","Golos Text",system-ui,sans-serif;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#111715; --surface:#1a2220; --ink:#e7eee9; --muted:#9aa7a1; --line:#2c3633;
-  --accent:#55c7ad; --on-accent:#0c1210; --soft:#1d2f29;
-  --good:#5fd596; --good-bg:#16301f; --bad:#ff8a80; --bad-bg:#3a1b19; --warn:#f2b75c; --warn-bg:#3a2d12; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#111715; --surface:#1a2220; --ink:#e7eee9; --muted:#9aa7a1; --line:#2c3633;
-  --accent:#55c7ad; --on-accent:#0c1210; --soft:#1d2f29;
-  --good:#5fd596; --good-bg:#16301f; --bad:#ff8a80; --bad-bg:#3a1b19; --warn:#f2b75c; --warn-bg:#3a2d12; color-scheme:dark}
 *{box-sizing:border-box}
 html,body{min-height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;
@@ -90,6 +82,34 @@ textarea{width:100%;min-height:110px;padding:10px;border:1.5px solid var(--ink);
 #cp{animation:glow 1.6s ease-out 1s 2}
 .conf{position:fixed;top:-20px;width:9px;height:14px;z-index:50;pointer-events:none;animation:fall linear forwards}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ===== Яскравий ігровий вигляд ===== */
+:root{--bg:#5b36e8;--surface:#ffffff;--ink:#1b1340;--muted:#5d5683;--line:#ddd5f7;--accent:#6c3ff5;--on-accent:#fff;--soft:#efe9ff;--yellow:#ffd23f;--f-body:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--f-disp:"Rubik","Nunito",system-ui,sans-serif;color-scheme:light}
+body{background:radial-gradient(circle at 12% 8%,#8a5cff 0,transparent 38%),radial-gradient(circle at 92% 90%,#2fd3b4 0,transparent 32%),radial-gradient(circle at 88% 6%,#ff7ab6 0,transparent 26%),var(--bg);background-attachment:fixed;font-weight:600}
+.card{border:3px solid var(--ink);border-radius:20px;box-shadow:6px 6px 0 var(--ink)}
+.eyebrow{color:var(--accent);font-weight:800}
+h1{font-size:1.9rem;font-weight:700}
+h2{font-weight:700;font-size:1.3rem}
+input[type=text],select,textarea{border:3px solid var(--ink);border-radius:14px;font-weight:700}
+.btn{border:3px solid var(--ink);border-radius:14px;font-weight:800;background:#fff}
+.btn.pri{background:var(--yellow);color:var(--ink);box-shadow:4px 4px 0 var(--ink);font-size:1.05rem;padding:12px 22px}
+.btn.pri:not(:disabled):hover{box-shadow:6px 6px 0 var(--ink)}
+.bar{height:16px;border:3px solid var(--ink);border-radius:20px;background:#fff;overflow:hidden}
+.bar i{background:linear-gradient(90deg,#ff7ab6,#ffd23f,#2fd3b4);border-radius:0}
+.opt{border:3px solid var(--ink);border-radius:16px;font-weight:800;font-size:1.05rem;box-shadow:4px 4px 0 var(--ink);align-items:center;background:var(--c,#fff);color:var(--ink)}
+.opt:nth-child(1){--c:#ff8a8a}.opt:nth-child(2){--c:#ffd23f}.opt:nth-child(3){--c:#5fe0b8}.opt:nth-child(4){--c:#7fb6ff}
+.opt b{display:grid;place-items:center;min-width:2rem;height:2rem;border-radius:50%;background:#fff;border:3px solid var(--ink);color:var(--ink);font-family:var(--f-disp)}
+.opt:hover{transform:translate(-2px,-2px);border-color:var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.opt[aria-pressed=true]{border-color:var(--ink);background:var(--c);transform:translate(3px,3px);box-shadow:0 0 0 4px #fff,0 0 0 7px var(--ink)}
+.opt[aria-pressed=true] b{background:var(--ink);color:#fff}
+.grade{font-size:5.4rem;background:linear-gradient(90deg,#ff5fa2,#6c3ff5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.note{border:3px dashed var(--ink);border-radius:14px;background:var(--soft)}
+.pill{border:2px solid var(--ink);font-weight:800}
+.rev{border-radius:12px}
+th{background:var(--yellow);border-color:var(--ink)}td,th{border-color:var(--ink)}
+.qrs .card{box-shadow:4px 4px 0 var(--ink)}
+.code{border:2px solid var(--ink);border-radius:10px}
+@media(max-width:560px){.grade{font-size:4.2rem}.card{box-shadow:4px 4px 0 var(--ink)}}
 </style>
 
 </head><body>
